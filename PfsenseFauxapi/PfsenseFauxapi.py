@@ -1,5 +1,4 @@
-#!/usr/bin/python3
-# 
+#
 # Copyright 2017 Nicholas de Jong  <contact[at]nicholasdejong.com>
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +23,7 @@ import datetime
 import hashlib
 from .__version__ import __version__
 
+
 class PfsenseFauxapiException(Exception):
     pass
 
@@ -47,7 +47,7 @@ class PfsenseFauxapi:
         self.apisecret = apisecret
         self.use_verified_https = use_verified_https
         self.debug = debug
-        if not self.use_verified_https:
+        if self.use_verified_https is False:
             requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
     def config_get(self, section=None):
@@ -154,18 +154,22 @@ class PfsenseFauxapi:
             raise PfsenseFauxapiException('unable to complete send_event() request', json.loads(res.text))
         return self._json_parse(res.text)
 
-    def _api_request(self, method, action, params={}, data=None):
+    def _api_request(self, method, action, params=None, data=None):
+        if params is None:
+            params = {}
         if self.debug:
             params['__debug'] = 'true'
         url = '{proto}://{host}/{base_url}/?action={action}&{params}'.format(
             proto=self.proto, host=self.host, base_url=self.base_url, action=action, params=urllib.parse.urlencode(params))
         if method.upper() == 'GET':
-            return requests.get(url,
+            return requests.get(
+                url,
                 headers={'fauxapi-auth': self._generate_auth()},
                 verify=self.use_verified_https
             )
         elif method.upper() == 'POST':
-            return requests.post(url,
+            return requests.post(
+                url,
                 headers={'fauxapi-auth': self._generate_auth()},
                 verify=self.use_verified_https,
                 data=data
@@ -182,6 +186,6 @@ class PfsenseFauxapi:
     def _json_parse(self, data):
         try:
             return json.loads(data)
-        except(json.JSONDecodeError):
+        except json.JSONDecodeError:
             pass
-        raise PfsenseFauxapiException('unable to parse response data!', data)
+        raise PfsenseFauxapiException('Unable to parse response data!', data)

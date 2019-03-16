@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from PfsenseFauxapi.__version__ import __version__
 
 setup(
-    name='PfsenseFauxapi',
+    name='pfsense-fauxapi',
     version=__version__,
     description='Python client for the pfSense-FauxAPI on a pfSense host',
 
@@ -22,7 +22,7 @@ setup(
     license='Apache',
 
     packages=find_packages(),
-    scripts=['bin/fauxapipy'],
+    scripts=['bin/fauxapi'],
     install_requires=['requests'],
 
 )

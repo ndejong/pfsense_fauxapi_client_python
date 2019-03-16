@@ -1,4 +1,0 @@
-#!/usr/bin/env python3
-
-from pfsense_fauxapi import PfsenseFauxapi
-PfsenseFauxapi.PfsenseFauxapi().main()
