@@ -1,5 +1,8 @@
 # PfsenseFauxapi - Python Interface
 
+[![PyPi](https://img.shields.io/pypi/v/pfsense-fauxapi.svg)](https://pypi.org/project/pfsense-fauxapi/)
+[![Build Status](https://travis-ci.org/ndejong/pfsense_fauxapi_client_python.svg?branch=master)](https://travis-ci.org/ndejong/pfsense_fauxapi_client_python)
+
 Python client for pfSense-FauxAPI - https://github.com/ndejong/pfsense_fauxapi
 
 Available as a PyPi package, to install, installs an API _client_ for to interact with a 
@@ -71,9 +74,11 @@ $ fauxapi --host 192.168.1.200 gateway_status | jq .
 Tests for (almost) all client-side function calls are implemented with mocked API response data
 you can check them with pytest
 ```bash
-pytest -v tests
+python3 setup.py test
 ```
 
+Packages are tested via Travis
+[travis-ci.org/ndejong/pfsense_fauxapi_client_python](https://travis-ci.org/ndejong/pfsense_fauxapi_client_python)
 
 ### Package Build
 Should you need/want to build the package from source
