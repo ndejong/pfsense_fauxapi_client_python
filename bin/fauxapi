@@ -22,6 +22,7 @@ import sys
 import inspect
 import argparse
 from PfsenseFauxapi import PfsenseFauxapi
+from PfsenseFauxapi import PfsenseFauxapiException
 
 
 class FauxAPIPyException(Exception):
@@ -80,7 +81,7 @@ class FauxAPIPy:
         function = self.args.function[0]
         function_args = self.args.function[1:]
 
-        fauxapi = PfsenseFauxapi.PfsenseFauxapi(
+        fauxapi = PfsenseFauxapi(
             host=self.args.host,
             apikey=apikey,
             apisecret=apisecret,
@@ -117,7 +118,7 @@ class FauxAPIPy:
             else:
                 result = {'error': 'Too many input args provided'}
 
-        except PfsenseFauxapi.PfsenseFauxapiException as e:
+        except PfsenseFauxapiException as e:
 
             try:
                 error_string = str(e.args)

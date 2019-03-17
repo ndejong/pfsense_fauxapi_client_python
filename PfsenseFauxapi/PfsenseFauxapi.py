@@ -51,16 +51,12 @@ class PfsenseFauxapi:
             requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
     def config_get(self, section=None):
-        res = self._api_request('GET', 'config_get')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_get() request', json.loads(res.text))
-        else:
-            config = self._json_parse(res.text)
+        config = self._api_request('GET', 'config_get')
         if section is None:
             return config['data']['config']
         elif section in config['data']['config']:
             return config['data']['config'][section]
-        raise PfsenseFauxapiException('unable to complete config_get request, section is unknown', section)
+        raise PfsenseFauxapiException('Unable to complete config_get request, section is unknown', section)
 
     def config_set(self, config, section=None):
         if section is None:
@@ -68,113 +64,82 @@ class PfsenseFauxapi:
         else:
             config_new = self.config_get(section=None)
             config_new[section] = config
-        res = self._api_request('POST', 'config_set', data=json.dumps(config_new))
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_set() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('POST', 'config_set', data=json.dumps(config_new))
 
     def config_patch(self, config):
-        res = self._api_request('POST', 'config_patch', data=json.dumps(config))
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_patch() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('POST', 'config_patch', data=json.dumps(config))
 
     def config_reload(self):
-        res = self._api_request('GET', 'config_reload')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_reload() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'config_reload')
 
     def config_backup(self):
-        res = self._api_request('GET', 'config_backup')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete system_reboot() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'config_backup')
 
     def config_backup_list(self):
-        res = self._api_request('GET', 'config_backup_list')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_backup_list() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'config_backup_list')
 
     def config_restore(self, config_file):
-        res = self._api_request('GET', 'config_restore', params={'config_file': config_file})
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete config_restore() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'config_restore', params={'config_file': config_file})
 
     def send_event(self, command):
-        res = self._api_request('POST', 'send_event', data=json.dumps([command]))
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete send_event() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('POST', 'send_event', data=json.dumps([command]))
 
     def system_reboot(self):
-        res = self._api_request('GET', 'system_reboot')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete system_reboot() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'system_reboot')
 
     def system_stats(self):
-        res = self._api_request('GET', 'system_stats')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete system_stats() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'system_stats')
 
     def interface_stats(self, interface):
-        res = self._api_request('GET', 'interface_stats', params={'interface': interface})
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete interface_stats() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'interface_stats', params={'interface': interface})
 
     def gateway_status(self):
-        res = self._api_request('GET', 'gateway_status')
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete gateway_status() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'gateway_status')
 
     def rule_get(self, rule_number=None):
-        res = self._api_request('GET', 'rule_get', params={'rule_number': rule_number})
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete rule_get() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('GET', 'rule_get', params={'rule_number': rule_number})
 
     def alias_update_urltables(self, table=None):
-        if table is None:
-            res = self._api_request('GET', 'alias_update_urltables')
-        else:
-            res = self._api_request('GET', 'alias_update_urltables', params={'table': table})
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete alias_update_urltables() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        if table is not None:
+            return self._api_request('GET', 'alias_update_urltables', params={'table': table})
+        return self._api_request('GET', 'alias_update_urltables')
 
     def function_call(self, data):
-        res = self._api_request('POST', 'function_call', data=json.dumps(data))
-        if res.status_code != 200:
-            raise PfsenseFauxapiException('unable to complete send_event() request', json.loads(res.text))
-        return self._json_parse(res.text)
+        return self._api_request('POST', 'function_call', data=json.dumps(data))
 
     def _api_request(self, method, action, params=None, data=None):
+
         if params is None:
             params = {}
+
         if self.debug:
             params['__debug'] = 'true'
+
         url = '{proto}://{host}/{base_url}/?action={action}&{params}'.format(
             proto=self.proto, host=self.host, base_url=self.base_url, action=action, params=urllib.parse.urlencode(params))
+
         if method.upper() == 'GET':
-            return requests.get(
+            res = requests.get(
                 url,
                 headers={'fauxapi-auth': self._generate_auth()},
                 verify=self.use_verified_https
             )
         elif method.upper() == 'POST':
-            return requests.post(
+            res = requests.post(
                 url,
                 headers={'fauxapi-auth': self._generate_auth()},
                 verify=self.use_verified_https,
                 data=data
             )
-        raise PfsenseFauxapiException('request method not supported!', method)
+        else:
+            raise PfsenseFauxapiException('Request method not supported!', method)
+
+        if res.status_code == 404:
+            raise PfsenseFauxapiException('Unable to find FauxAPI on target host, is it installed?')
+        elif res.status_code != 200:
+            raise PfsenseFauxapiException('Unable to complete {}() request'.format(action), json.loads(res.text))
+
+        return self._json_parse(res.text)
 
     def _generate_auth(self):
         # auth = apikey:timestamp:nonce:HASH(apisecret:timestamp:nonce)

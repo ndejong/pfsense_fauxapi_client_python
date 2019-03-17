@@ -67,6 +67,14 @@ $ fauxapi --host 192.168.1.200 gateway_status | jq .
 }
 ```
 
+### Package Testing
+Tests for (almost) all client-side function calls are implemented with mocked API response data
+you can check them with pytest
+```bash
+pytest -v tests
+```
+
+
 ### Package Build
 Should you need/want to build the package from source
 ```bash
