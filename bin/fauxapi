@@ -118,11 +118,20 @@ class FauxAPIPy:
                 result = {'error': 'Too many input args provided'}
 
         except PfsenseFauxapi.PfsenseFauxapiException as e:
-            error_message, error_data = ast.literal_eval(str(e.args))
-            result = {
-                'error': error_message,
-                'data': error_data
-            }
+
+            try:
+                error_string = str(e.args)
+                if error_string[-3:] == "',)":
+                    error_string = error_string[:-3] + "','')"
+                error_message, error_data = ast.literal_eval(error_string)
+                result = {
+                    'error': error_message,
+                    'data': error_data
+                }
+            except ValueError:
+                result = {
+                    'error': str(e.args),
+                }
 
         print(json.dumps(result))
 
