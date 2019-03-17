@@ -3,10 +3,16 @@
 from setuptools import setup, find_packages
 from PfsenseFauxapi.__version__ import __version__
 
+with open('README.md', 'r') as f:
+    long_description = f.read()
+
 setup(
     name='pfsense-fauxapi',
     version=__version__,
     description='Python client for the pfSense-FauxAPI on a pfSense host',
+
+    long_description=long_description,
+    long_description_content_type='text/markdown',
 
     classifiers=[
         'Topic :: System :: Networking :: Firewalls',
