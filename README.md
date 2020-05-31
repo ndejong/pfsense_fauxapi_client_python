@@ -5,13 +5,26 @@
 
 Python client for pfSense-FauxAPI - https://github.com/ndejong/pfsense_fauxapi
 
-Available as a PyPi package, to install, installs an API _client_ for to interact with a 
-pfSense host that has the FauxAPI package installed.   
+## Install
+#### via PyPi
 ```bash
 pip3 install pfsense-fauxapi
 ```
 
-### Code Examples
+#### Install via Source
+```bash
+# obtain the source material
+git clone https://github.com/ndejong/pfsense_fauxapi_client_python.git
+cd pfsense_fauxapi_client_python
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 setup.py clean
+python3 setup.py test
+python3 setup.py install
+```
+
+## Code Examples
 Three Python code samples are provided that demonstrate interface usage
 
 * `function-iterate.py` - iterates (almost) all the FauxAPI functions to confirm operation.  
@@ -19,7 +32,7 @@ Three Python code samples are provided that demonstrate interface usage
 * `usergroup-management.py` - demonstrates the ability to manage users and groups programmatically. 
 
 
-### Command Line
+## Command Line
 Additionally this pip-package provides a command-line interface to work with FauxAPI
 ```bash
 usage: fauxapi [-h] [--host [host]] [--apikey [key]] [--apisecret [secret]]
@@ -68,27 +81,4 @@ $ fauxapi --host 192.168.1.200 gateway_status | jq .
     }
   }
 }
-```
-
-### Package Testing
-Tests for (almost) all client-side function calls are implemented with mocked API response data
-you can check them with pytest
-```bash
-python3 setup.py test
-```
-
-Packages are tested via Travis
-[travis-ci.org/ndejong/pfsense_fauxapi_client_python](https://travis-ci.org/ndejong/pfsense_fauxapi_client_python)
-
-### Package Build
-Should you need/want to build the package from source
-```bash
-# obtain the source material
-git clone https://github.com/ndejong/pfsense_fauxapi_client_python.git
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-python3 setup.py clean
-python3 setup.py test
-python3 setup.py install
 ```
