@@ -85,11 +85,10 @@ Should you need/want to build the package from source
 ```bash
 # obtain the source material
 git clone https://github.com/ndejong/pfsense_fauxapi_client_python.git
-cd pfsense_fauxapi_client_python
-
-# build the package
-python3 setup.py sdist bdist_wheel
-
-# install the package from the .whl file in the dist path 
-pip install dist/pfsense*.whl
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 setup.py clean
+python3 setup.py test
+python3 setup.py install
 ```
