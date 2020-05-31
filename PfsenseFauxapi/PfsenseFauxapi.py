@@ -1,5 +1,5 @@
 #
-# Copyright 2017 Nicholas de Jong  <contact[at]nicholasdejong.com>
+# Copyright 2020 Nicholas de Jong  <contact[at]nicholasdejong.com>
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -106,6 +106,9 @@ class PfsenseFauxapi:
 
     def function_call(self, data):
         return self._api_request('POST', 'function_call', data=json.dumps(data))
+
+    def system_info(self):
+        return self._api_request('GET', 'system_info')
 
     def _api_request(self, method, action, params=None, data=None):
 

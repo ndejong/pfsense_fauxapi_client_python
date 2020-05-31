@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2017 Nicholas de Jong  <contact[at]nicholasdejong.com>
+# Copyright 2020 Nicholas de Jong  <contact[at]nicholasdejong.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,8 +21,12 @@ import json
 import sys
 import inspect
 import argparse
-from PfsenseFauxapi import PfsenseFauxapi
-from PfsenseFauxapi import PfsenseFauxapiException
+
+try:
+    import PfsenseFauxapi
+except:
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    import PfsenseFauxapi
 
 
 class FauxAPIPyException(Exception):
@@ -81,7 +85,7 @@ class FauxAPIPy:
         function = self.args.function[0]
         function_args = self.args.function[1:]
 
-        fauxapi = PfsenseFauxapi(
+        fauxapi = PfsenseFauxapi.PfsenseFauxapi(
             host=self.args.host,
             apikey=apikey,
             apisecret=apisecret,

@@ -182,3 +182,15 @@ def test_function_call(mock_requests_post):
     response = fauxapi.function_call(None)
     assert response['action'] == 'function_call'
     assert response['message'] == 'ok'
+
+@patch('requests.get', autospec=True)
+def test_system_info(mock_requests_get):
+
+    fauxapi = PfsenseFauxapi(host=None, apikey=None, apisecret=None)
+    mock_requests_get.return_value.status_code = 200
+    mock_requests_get.return_value.text = '{"callid": "5ed39b838c8f6", "action": "system_info", "message": "ok", "data": {"info": "foobar"}}'
+
+    response = fauxapi.system_info()
+    assert response['action'] == 'system_info'
+    assert response['message'] == 'ok'
+    assert response['data'] is not None

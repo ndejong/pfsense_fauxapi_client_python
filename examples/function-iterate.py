@@ -260,3 +260,9 @@ print(json.dumps(
         'args': ['ntpd']
     }
 )))
+
+# system_info
+# =============================================================================
+print(json.dumps(
+    FauxapiLib.system_info())
+)
