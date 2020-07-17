@@ -122,7 +122,7 @@ class FauxAPIPy:
             else:
                 result = {'error': 'Too many input args provided'}
 
-        except PfsenseFauxapiException as e:
+        except PfsenseFauxapi.PfsenseFauxapiException as e:
 
             try:
                 error_string = str(e.args)
