@@ -64,10 +64,10 @@ class PfsenseFauxapi:
         else:
             config_new = self.config_get(section=None)
             config_new[section] = config
-        return self._api_request('POST', 'config_set', data=json.dumps(config_new))
+        return self._api_request('POST', 'config_set', data=config_new)
 
     def config_patch(self, config):
-        return self._api_request('POST', 'config_patch', data=json.dumps(config))
+        return self._api_request('POST', 'config_patch', data=config)
 
     def config_reload(self):
         return self._api_request('GET', 'config_reload')
@@ -82,7 +82,7 @@ class PfsenseFauxapi:
         return self._api_request('GET', 'config_restore', params={'config_file': config_file})
 
     def send_event(self, command):
-        return self._api_request('POST', 'send_event', data=json.dumps([command]))
+        return self._api_request('POST', 'send_event', data=[command])
 
     def system_reboot(self):
         return self._api_request('GET', 'system_reboot')
@@ -105,7 +105,7 @@ class PfsenseFauxapi:
         return self._api_request('GET', 'alias_update_urltables')
 
     def function_call(self, data):
-        return self._api_request('POST', 'function_call', data=json.dumps(data))
+        return self._api_request('POST', 'function_call', data=data)
 
     def system_info(self):
         return self._api_request('GET', 'system_info')
@@ -132,7 +132,7 @@ class PfsenseFauxapi:
                 url,
                 headers={'fauxapi-auth': self._generate_auth()},
                 verify=self.use_verified_https,
-                data=data
+                data=json.dumps(data)
             )
         else:
             raise PfsenseFauxapiException('Request method not supported!', method)

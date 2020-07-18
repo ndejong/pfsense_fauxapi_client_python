@@ -83,7 +83,15 @@ class FauxAPIPy:
             self.args.function.extend(self.args.function_args)
 
         function = self.args.function[0]
-        function_args = self.args.function[1:]
+
+        # decode args that are JSON formatted
+        function_args = []
+        for _ in self.args.function[1:]:
+            try:
+                decoded_arg = json.loads(_)
+            except json.decoder.JSONDecodeError:
+                decoded_arg = _
+            function_args.append(decoded_arg)
 
         fauxapi = PfsenseFauxapi.PfsenseFauxapi(
             host=self.args.host,
