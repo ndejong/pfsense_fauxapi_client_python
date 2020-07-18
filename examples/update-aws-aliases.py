@@ -16,7 +16,11 @@
 #
 
 import os, sys, json, urllib.request
-from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
+try:
+    from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
+except:
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
 
 
 def usage():

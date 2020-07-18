@@ -17,7 +17,11 @@
 
 import os, sys, json
 import bcrypt  # pip install bcrypt
-from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
+try:
+    from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
+except:
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    from PfsenseFauxapi.PfsenseFauxapi import PfsenseFauxapi
 
 
 def usage():
